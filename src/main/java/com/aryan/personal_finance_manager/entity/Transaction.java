@@ -1,12 +1,14 @@
 package com.aryan.personal_finance_manager.entity;
 
 import com.aryan.personal_finance_manager.enums.Category;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "transactions")
@@ -27,7 +29,8 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    private LocalDateTime timestamp;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")  // <-- formatting happens here
+    private LocalDateTime timestamp = LocalDateTime.now();
 
     // Constructors
     public Transaction() {
@@ -47,10 +50,6 @@ public class Transaction {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -64,6 +63,9 @@ public class Transaction {
     }
 
     public void setAmount(Double amount) {
+        if(amount < 0) {
+            throw new IllegalArgumentException("Amount cannot be negative");
+        }
         this.amount = amount;
     }
 
@@ -83,4 +85,5 @@ public class Transaction {
         this.timestamp = timestamp;
     }
 }
+
 

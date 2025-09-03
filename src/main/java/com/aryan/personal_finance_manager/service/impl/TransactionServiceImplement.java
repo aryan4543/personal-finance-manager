@@ -6,6 +6,7 @@ import com.aryan.personal_finance_manager.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,6 +21,7 @@ public class TransactionServiceImplement implements TransactionService {
 
     @Override
     public Transaction createTransaction(Transaction transaction) {
+        // auto-set timestamps here
         return transactionRepository.save(transaction);
     }
 
