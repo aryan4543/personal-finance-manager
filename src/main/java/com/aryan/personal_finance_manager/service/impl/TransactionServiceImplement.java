@@ -50,5 +50,10 @@ public class TransactionServiceImplement implements TransactionService {
         Transaction existing = getTransactionById(id);
         transactionRepository.delete(existing);
     }
+
+    @Override
+    public void deleteTransactions(List<Long> ids) {
+        transactionRepository.deleteAllById(ids);
+    }
 }
 
