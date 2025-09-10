@@ -6,12 +6,17 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "transactions")
+@Data // generates getters, setters, toString, equals, hashCode
+@NoArgsConstructor // generates no-arg constructor
+@AllArgsConstructor // generates constructor with all fields
 public class Transaction {
 
     @Id
@@ -32,57 +37,12 @@ public class Transaction {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")  // <-- formatting happens here
     private LocalDateTime timestamp = LocalDateTime.now();
 
-    // Constructors
-    public Transaction() {
-        this.timestamp = LocalDateTime.now();
-    }
-
-    public Transaction(String title, Double amount, Category category) {
-        this.title = title;
-        this.amount = amount;
-        this.category = category;
-        this.timestamp = LocalDateTime.now();
-    }
-
-    // Getters and Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
+    // Custom setter
     public void setAmount(Double amount) {
-        if(amount < 0) {
+        if (amount < 0) {
             throw new IllegalArgumentException("Amount cannot be negative");
         }
         this.amount = amount;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
     }
 }
 
