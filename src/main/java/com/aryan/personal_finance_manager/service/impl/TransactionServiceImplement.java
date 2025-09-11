@@ -1,6 +1,7 @@
 package com.aryan.personal_finance_manager.service.impl;
 
 import com.aryan.personal_finance_manager.entity.Transaction;
+import com.aryan.personal_finance_manager.exception.TransactionNotFoundException;
 import com.aryan.personal_finance_manager.repository.TransactionRepository;
 import com.aryan.personal_finance_manager.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class TransactionServiceImplement implements TransactionService {
     @Override
     public Transaction getTransactionById(Long id) {
         return transactionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Transaction not found with id: " + id));
+                .orElseThrow(() -> new TransactionNotFoundException(id));
     }
 
     @Override

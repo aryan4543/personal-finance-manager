@@ -2,6 +2,7 @@ package com.aryan.personal_finance_manager.controller;
 
 import com.aryan.personal_finance_manager.entity.Transaction;
 import com.aryan.personal_finance_manager.service.TransactionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class TransactionController {
     }
 
     @PostMapping
-    public Transaction createTransaction(@RequestBody Transaction transaction) {
+    public Transaction createTransaction(@Valid @RequestBody Transaction transaction) {
         return transactionService.createTransaction(transaction);
     }
 
@@ -35,7 +36,7 @@ public class TransactionController {
     }
 
     @PutMapping("/{id}")
-    public Transaction updateTransaction(@PathVariable Long id, @RequestBody Transaction transaction) {
+    public Transaction updateTransaction(@PathVariable Long id, @Valid @RequestBody Transaction transaction) {
         return transactionService.updateTransaction(id, transaction);
     }
 
