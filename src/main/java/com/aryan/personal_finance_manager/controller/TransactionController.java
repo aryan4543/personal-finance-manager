@@ -3,6 +3,7 @@ package com.aryan.personal_finance_manager.controller;
 import com.aryan.personal_finance_manager.entity.Transaction;
 import com.aryan.personal_finance_manager.service.TransactionService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,23 +32,23 @@ public class TransactionController {
     }
 
     @GetMapping("/{id}")
-    public Transaction getTransactionById(@PathVariable Long id) {
+    public Transaction getTransactionById(@PathVariable @Min(1) Long id) {
         return transactionService.getTransactionById(id);
     }
 
     @PutMapping("/{id}")
-    public Transaction updateTransaction(@PathVariable Long id, @Valid @RequestBody Transaction transaction) {
+    public Transaction updateTransaction(@PathVariable @Min(1) Long id, @Valid @RequestBody Transaction transaction) {
         return transactionService.updateTransaction(id, transaction);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteTransaction(@PathVariable Long id) {
+    public String deleteTransaction(@PathVariable @Min(1) Long id) {
         transactionService.deleteTransaction(id);
         return "Transaction with ID " + id + " has been deleted successfully.";
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteTransactions(@RequestParam List<Long> ids) {
+    public ResponseEntity<Void> deleteTransactions(@RequestParam @Min(1) List<Long> ids) {
         transactionService.deleteTransactions(ids);
         return ResponseEntity.noContent().build();
     }
